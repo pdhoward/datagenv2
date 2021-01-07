@@ -1,6 +1,5 @@
 
 const Mongo =               require('mongodb').MongoClient;
-const csv=                  require('csvtojson')
 const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
 const {randomRange} =       require('../random')
@@ -27,15 +26,8 @@ Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
 
 const seed = (router) => {
 	router.use(async(req, res, next) => {
-
-    // array of us zip codes and location coordinates
-    const uszipsPath='./data/uszips.csv'
-    const names= await csv().fromFile(uszipsPath)   
-    const reduceArray = names.slice(0, 300)
-    const selectzips = reduceArray.map(r => r.dba)
-
-    console.log(`The array of us zipcodes has ${selectzips.length} entries`)
-        
+    const zip = random() 
+    console.log(zip)
     const cursor = db.collection('venues').find({});
     for await (const doc of cursor) {
 
