@@ -5,22 +5,25 @@ const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
 const {randomRange} =       require('../random')
 const { g, b, gr, r, y } =  require('../console')
-const url = process.env.ATLAS_MACHINE_URI
-
+const machineurl = process.env.ATLAS_MACHINE_URI
+const proximityurl = process.env.ATLAS_PROXIMITY_URI
 let dbName = 'machine'
+let proximityName = 'proximity'
 let db
+let dbProximity
 let cnt = 0
 let traffic = 0
-Mongo.connect(url, { useUnifiedTopology: true }, ((err, client) => {
-  if (err) console.log(r(`Error connecting to MongoDB`))
+Mongo.connect(machineurl, { useUnifiedTopology: true }, ((err, client) => {
+  if (err) console.log(r(`Error connecting to Machine MongoDB`))
   db = client.db(dbName)
-  console.log(b(`MongoDB is Live`))
+  console.log(b(`Machine MongoDB is Live`))
+}))
+Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
+  if (err) console.log(r(`Error connecting to Proximity MongoDB`))
+  dbProximity = client.db(proximityName)
+  console.log(b(`Proximity MongoDB is Live`))
 }))
 
-const getLocalName = () => {
-  let names = ['Grocery Stores', 'Specialty Retail']
-  return names[Math.floor(Math.random() * names.length)]
-}
 
 const seed = (router) => {
 	router.use(async(req, res, next) => {
@@ -37,7 +40,6 @@ const seed = (router) => {
     const result = filter.map((f) => {      
       // create a doc object with a set of random data for populating a test object
       
-
      
 
       // assign random tags for enterprise, geo, lifestyle        
@@ -97,7 +99,7 @@ const seed = (router) => {
       
       return JSON.parse(JSON.stringify(newDoc));
     })
-    
+    /*
     await db.collection('venues')
       .deleteMany({})
       .then((res) => {
@@ -114,7 +116,7 @@ const seed = (router) => {
         console.log(err)
         process,exit(1)
       })          
-    
+    */
    
     let html = `<h2>${cnt} records modified!</h2>`
     res.send(html)   
