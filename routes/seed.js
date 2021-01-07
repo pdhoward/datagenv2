@@ -35,7 +35,7 @@ const seed = (router) => {
     const selectzips = reduceArray.map(r => r.dba)
 
     console.log(`The array of us zipcodes has ${selectzips.length} entries`)
-      
+    /*
     // read through machine/venue collection using the cursor
     const result = filter.map((f) => {      
       // create a doc object with a set of random data for populating a test object
