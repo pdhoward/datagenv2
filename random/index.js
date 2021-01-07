@@ -13,7 +13,8 @@ csv().fromFile(uszipsPath)
       .then((arr) => {
         zips = [...arr]
       })
-// random data from zip array
+
+// retrieve random object from zipcode array
 const random = () => {
     return new Promise((resolve, reject) => {
         console.log(`The array of us zipcodes has ${zips.length} entries`)
@@ -24,11 +25,17 @@ const random = () => {
 }
 
 // return a fake mac address for gateway device
-const mac = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');       
+const mac = size => {
+    return new Promise((resolve, reject) => {
+        resolve( [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join(''))
+    })   
+}      
 
 // generate a random jwt
-function token(venue) {	
-	return jwt.sign(venue, JWT_SECRET)
+function token(venue) {
+    return new Promise((resolve, reject) => {
+        resolve(jwt.sign(venue, JWT_SECRET))
+    })	
 }
 
 module.exports = {

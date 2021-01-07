@@ -50,14 +50,14 @@ const seed = (router) => {
       } else {
         // generate 12 digit random mac addr
         doc.monitors = []
-        doc.monitor.push(mac(12))
+        doc.monitors.push(await mac(12))
       }
       doc.updatedOn = Date.now()
       let venueData = {}
       venueData.marketid = doc.marketid
       venueData.name = doc.name 
       venueData.updatedOn = doc.updatedOn 
-      doc.apitoken = token(venueData)
+      doc.apitoken = await token(venueData)
       
       cnt = cnt + 1
 
