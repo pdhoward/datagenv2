@@ -2,6 +2,8 @@
 const Mongo =               require('mongodb').MongoClient;
 const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
+const {mac} =               require('../random')
+const {token} =             require('../random')
 const { g, b, gr, r, y } =  require('../console')
 const machineurl = process.env.ATLAS_MACHINE_URI
 const proximityurl = process.env.ATLAS_PROXIMITY_URI
@@ -39,9 +41,41 @@ const seed = (router) => {
       doc.location.coordinates.length = 0
       doc.location.coordinates.length.push(parseInt(zip.lng))
       doc.location.coordinates.length.push(parseInt(zip.lat))
-         
+      doc.type = "Venue"
+
+      if (doc.monitors) {
+        let macaddr = doc.monitors
+        doc.monitors = []
+        doc.monitor.push(macaddr)
+      } else {
+        // generate 12 digit random mac addr
+        doc.monitors = []
+        doc.monitor.push(mac(12))
+      }
+      doc.updatedOn = Date.now()
+      let venueData = {}
+      venueData.marketid = doc.marketid
+      venueData.name = doc.name 
+      venueData.updatedOn = doc.updatedOn 
+      doc.apitoken = token(venueData)
+      
+      cnt = cnt + 1
+      
+      await dbProximity.collection('venues')
+      .deleteMany({})
+      .then((res) => {
+        console.log(`${res.deletedCount} records deleted!`)
+      })
+      .then(() => db.collection('venues').insert(doc))
+      .catch(err => {
+        console.log(err)
+        process,exit(1)
+      })    
+      
     }
-    console.log(`The Venue collection in machine has ${cnt} documents`)
+
+    let count = await dbProximity.collection('venues').stats
+    console.log(`The Proximity Venue collection has ${count} documents`)
     /*
     // read through machine/venue collection using the cursor
     const result = filter.map((f) => {      
