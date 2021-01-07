@@ -2,7 +2,6 @@
 const Mongo =               require('mongodb').MongoClient;
 const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
-const {randomRange} =       require('../random')
 const { g, b, gr, r, y } =  require('../console')
 const machineurl = process.env.ATLAS_MACHINE_URI
 const proximityurl = process.env.ATLAS_PROXIMITY_URI
@@ -23,17 +22,23 @@ Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
   console.log(b(`Proximity MongoDB is Live`))
 }))
 
-
 const seed = (router) => {
 	router.use(async(req, res, next) => {
-    const zip = random() 
-    console.log(zip)
+    const zip = await random() 
+    console.log(zip)   
     const cursor = db.collection('venues').find({});
     for await (const doc of cursor) {
 
-      if (doc.lifemode[0] == 'Upscale Avenues') {
-        cnt = cnt + 1  
-      }
+      doc.address.postalCode = zip.zip
+      doc.address.city = zip.city
+      doc.address.state = zip.state_id 
+      doc.address.stateName = zip.state_name
+      doc.address.countyName = zip.county_name
+      doc.address.coordinates.lat = parseInt(zip.lat)
+      doc.address.coordinates.lng = parseInt(zip.lng)
+      doc.location.coordinates.length = 0
+      doc.location.coordinates.length.push(parseInt(zip.lng))
+      doc.location.coordinates.length.push(parseInt(zip.lat))
          
     }
     console.log(`The Venue collection in machine has ${cnt} documents`)
