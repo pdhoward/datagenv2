@@ -66,6 +66,9 @@ const seed = (router) => {
       venueData.name = doc.name 
       venueData.updatedOn = doc.updatedOn 
       doc.apitoken = await token(venueData)
+
+      // final updates - if enterprise value = local, doc.image randomly reassigned
+      // to jpg or svg
       
       cnt = cnt + 1
 
@@ -80,73 +83,7 @@ const seed = (router) => {
 
     let metrics = await dbProximity.collection('venues').stats()
     console.log(`The Proximity Venue collection has ${metrics.count} documents`)
-    /*
-    // read through machine/venue collection using the cursor
-    const result = filter.map((f) => {      
-      // create a doc object with a set of random data for populating a test object
-      
-     
-
-      // assign random tags for enterprise, geo, lifestyle        
-      if (data.enterprise[0].name == 'local') {
-        newDoc.enterprise.splice(0, 1, 'local')
-        newDoc.image = 'https://placeimg.com/200/200/arch/grayscale'
-      } else {
-        let name = data.enterprise[0].name
-        newDoc.enterprise.splice(0, 1, name )       
-        newDoc.image = data.enterprise[0].image
-      }      
-     
-
-      // custom assign a market tag based on value of enterprise
-      let ent = newDoc.enterprise[0]
-      switch(ent) {
-        case 'Marriott':
-         
-          break;
-        //
-        case 'Publix':
-         
-          break;
-        case 'Trader Joes':
-         
-          break;
-        case 'Circle K':
-         
-          break;
-        case 'Whole Foods':
-         
-          break;
-        case 'Kroger':
-         
-          break;
-        case 'University of Texas':
-          
-          break
-        //
-        case 'YMCA':
-         
-          break;
-        case 'local':
-         
-          break
-        //
-        case 'Dunkin Donut':
-         
-          break
-        default:
-         
-          break
-      }
-
-      newDoc.timestamp = Date.now()
-      newDoc.updatedOn = Date.now()
-      
-      return JSON.parse(JSON.stringify(newDoc));
-    })
-    /*
-            
-    */
+    
    
     let html = `<h2>${cnt} Machine Venue Documents Were Read!</h2>
                 <h4>${metrics.count} Proximity Docs were created </h4>
