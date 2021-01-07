@@ -26,6 +26,14 @@ Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
 
 const seed = (router) => {
 	router.use(async(req, res, next) => {
+
+    // remove all docs from proximity db collection
+    await dbProximity.collection('venues')
+    .deleteMany({})
+    .then((res) => {
+      console.log(`${res.deletedCount} records deleted!`)
+    })
+
     const zip = await random() 
     console.log(zip)   
     const cursor = db.collection('venues').find({});
@@ -36,11 +44,11 @@ const seed = (router) => {
       doc.address.state = zip.state_id 
       doc.address.stateName = zip.state_name
       doc.address.countyName = zip.county_name
-      doc.address.coordinates.lat = parseInt(zip.lat)
-      doc.address.coordinates.lng = parseInt(zip.lng)
+      doc.address.coordinates.lat = parseFloat(zip.lat)
+      doc.address.coordinates.lng = parseFloat(zip.lng)
       doc.location.coordinates.length = 0
-      doc.location.coordinates.push(parseInt(zip.lng))
-      doc.location.coordinates.push(parseInt(zip.lat))
+      doc.location.coordinates.push(parseFloat(zip.lng))
+      doc.location.coordinates.push(parseFloat(zip.lat))
       doc.type = "Venue"
 
       if (doc.monitors) {
@@ -62,15 +70,11 @@ const seed = (router) => {
       cnt = cnt + 1
 
       await dbProximity.collection('venues')
-      .deleteMany({})
-      .then((res) => {
-        console.log(`${res.deletedCount} records deleted!`)
-      })
-      .then(() => dbProximity.collection('venues').insertOne(doc))
-      .catch(err => {
-        console.log(err)
-        process.exit(1)
-      })    
+       .insertOne(doc)
+        .catch(err => {
+          console.log(err)
+          process.exit(1)
+        })    
       
     }
 
