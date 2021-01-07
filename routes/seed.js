@@ -35,6 +35,16 @@ const seed = (router) => {
     const selectzips = reduceArray.map(r => r.dba)
 
     console.log(`The array of us zipcodes has ${selectzips.length} entries`)
+        
+    const cursor = db.collection('venues').find({});
+    for await (const doc of cursor) {
+
+      if (doc.lifemode[0] == 'Upscale Avenues') {
+        cnt = cnt + 1  
+      }
+         
+    }
+    console.log(`The Venue collection in machine has ${cnt} documents`)
     /*
     // read through machine/venue collection using the cursor
     const result = filter.map((f) => {      
