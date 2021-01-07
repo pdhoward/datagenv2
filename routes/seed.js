@@ -78,8 +78,8 @@ const seed = (router) => {
       
     }
 
-    let count = await dbProximity.collection('venues').stats
-    console.log(`The Proximity Venue collection has ${count} documents`)
+    let metrics = await dbProximity.collection('venues').stats()
+    console.log(`The Proximity Venue collection has ${metrics.count} documents`)
     /*
     // read through machine/venue collection using the cursor
     const result = filter.map((f) => {      
@@ -148,7 +148,9 @@ const seed = (router) => {
             
     */
    
-    let html = `<h2>${cnt} Machine Venue Documents Were Read!</h2>`
+    let html = `<h2>${cnt} Machine Venue Documents Were Read!</h2>
+                <h4>${metrics.count} Proximity Docs were created </h4>
+                <h5> Average Doc Size: ${metrics.avgObjSize} Total DB Size: ${metrics.size} </h5> `
     res.send(html)   
     next()
   })  
