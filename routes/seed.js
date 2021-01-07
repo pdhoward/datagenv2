@@ -39,14 +39,14 @@ const seed = (router) => {
       doc.address.coordinates.lat = parseInt(zip.lat)
       doc.address.coordinates.lng = parseInt(zip.lng)
       doc.location.coordinates.length = 0
-      doc.location.coordinates.length.push(parseInt(zip.lng))
-      doc.location.coordinates.length.push(parseInt(zip.lat))
+      doc.location.coordinates.push(parseInt(zip.lng))
+      doc.location.coordinates.push(parseInt(zip.lat))
       doc.type = "Venue"
 
       if (doc.monitors) {
         let macaddr = doc.monitors
         doc.monitors = []
-        doc.monitor.push(macaddr)
+        doc.monitors.push(macaddr)
       } else {
         // generate 12 digit random mac addr
         doc.monitors = []
@@ -60,16 +60,16 @@ const seed = (router) => {
       doc.apitoken = token(venueData)
       
       cnt = cnt + 1
-      
+
       await dbProximity.collection('venues')
       .deleteMany({})
       .then((res) => {
         console.log(`${res.deletedCount} records deleted!`)
       })
-      .then(() => db.collection('venues').insert(doc))
+      .then(() => dbProximity.collection('venues').insertOne(doc))
       .catch(err => {
         console.log(err)
-        process,exit(1)
+        process.exit(1)
       })    
       
     }
@@ -141,25 +141,10 @@ const seed = (router) => {
       return JSON.parse(JSON.stringify(newDoc));
     })
     /*
-    await db.collection('venues')
-      .deleteMany({})
-      .then((res) => {
-        console.log(`${res.deletedCount} records deleted!`)
-      })
-      .then(() => db.collection('venues').insertMany(result))
-      .then(data => {
-        console.log(`${data.result.n} records inserted!`); 
-        cnt = data.result.n        
-        db.collection('venues').createIndex({location: "2dsphere"})
-      //process.exit(0)  
-      })
-      .catch(err => {
-        console.log(err)
-        process,exit(1)
-      })          
+            
     */
    
-    let html = `<h2>${cnt} records modified!</h2>`
+    let html = `<h2>${cnt} Machine Venue Documents Were Read!</h2>`
     res.send(html)   
     next()
   })  
