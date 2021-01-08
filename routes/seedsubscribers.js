@@ -16,7 +16,7 @@ let traffic = 0
 Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
   if (err) console.log(r(`Error connecting to Proximity MongoDB`))
   dbProximity = client.db(proximityName)
-  console.log(b(`Proximity MongoDB is Live (again)`))
+  console.log(b(`Proximity SUBS MongoDB is Live`))
 }))
 
 const seedsubscribers = (router) => {

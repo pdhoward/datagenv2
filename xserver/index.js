@@ -31,10 +31,12 @@ const about =               express.Router()
 const header =              express.Router()
 const seedvenues =          express.Router()
 const seedops =             express.Router()
+const seedsubscribers =     express.Router()
 
 require('../routes/about')(about)
 require('../routes/seedvenues')(seedvenues)
 require('../routes/seedops')(seedops)
+require('../routes/seedsubscribers')(seedsubscribers)
 require('../routes/header')(header)
 
 /////////////////////////////////////////////////////////
@@ -45,6 +47,7 @@ app.use(header)
 app.get('/about', about)
 app.get('/seedvenues', seedvenues)
 app.get('/seedops', seedops)
+app.get('/seedsubscribers', seedsubscribers)
 
 // start server
 app.listen(Port, () => console.log(g(`listening on port ${Port}`)))
