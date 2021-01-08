@@ -29,10 +29,12 @@ console.log('isDev: ' + isDev);
  ////////////////////////////////////////////////////
 const about =               express.Router()
 const header =              express.Router()
-const seed =                express.Router()
+const seedvenues =          express.Router()
+const seedops =             express.Router()
 
 require('../routes/about')(about)
-require('../routes/seed')(seed)
+require('../routes/seedvenues')(seedvenues)
+require('../routes/seedops')(seedops)
 require('../routes/header')(header)
 
 /////////////////////////////////////////////////////////
@@ -41,7 +43,8 @@ require('../routes/header')(header)
 
 app.use(header)
 app.get('/about', about)
-app.get('/seed', seed)
+app.get('/seedvenues', seedvenues)
+app.get('/seedops', seedops)
 
 // start server
 app.listen(Port, () => console.log(g(`listening on port ${Port}`)))

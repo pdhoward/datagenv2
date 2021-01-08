@@ -24,7 +24,7 @@ Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
   console.log(b(`Proximity MongoDB is Live`))
 }))
 
-const seed = (router) => {
+const seedvenues = (router) => {
 	router.use(async(req, res, next) => {
 
     // remove all docs from proximity db collection
@@ -93,7 +93,7 @@ const seed = (router) => {
   })  
 }
 
-module.exports = seed
+module.exports = seedvenues
 
  
   
