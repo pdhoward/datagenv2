@@ -1,4 +1,4 @@
-[
+export const images = [
     'https://res.cloudinary.com/stratmachine/image/upload/v1609950715/logos/watch-bob_ois4eu.jpg',
     'https://res.cloudinary.com/stratmachine/image/upload/v1609950715/logos/viki_xasidg.jpg',
     'https://res.cloudinary.com/stratmachine/image/upload/v1609950714/logos/the-fall_oruaye.jpg',

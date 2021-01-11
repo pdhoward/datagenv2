@@ -3,9 +3,17 @@ const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
 const {mac} =               require('../random')
 const {token} =             require('../random')
+const images =              require('../data/images')
+const svg =                 require('..data/svg')
 
 let cnt = 0
 let traffic = 0
+
+let logos = [...images, ...svg]
+console.log('------- stats on arrays ------')
+console.log(images.length)
+console.log(svg.length)
+console.log(logos.length)
 
 const seedvenues = (router) => {
 	router.use(async(req, res, next) => {
@@ -55,7 +63,7 @@ const seedvenues = (router) => {
       
       cnt = cnt + 1
 
-      await dbProximity.collection('venues')
+      await dbProximity.db('proximity').collection('venues')
        .insertOne(doc)
         .catch(err => {
           console.log(err)
@@ -64,7 +72,7 @@ const seedvenues = (router) => {
       
     }
 
-    let metrics = await dbProximity.collection('venues').stats()
+    let metrics = await dbProximity.db('proximity').collection('venues').stats()
     console.log(`The Proximity Venue collection has ${metrics.count} documents`)
     
    
