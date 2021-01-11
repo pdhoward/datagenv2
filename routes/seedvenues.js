@@ -1,10 +1,8 @@
-
+const {db, dbProximity} =   require('../db')
 const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
 const {mac} =               require('../random')
 const {token} =             require('../random')
-
-const {db, dbProximity} = require('../db')
 
 let cnt = 0
 let traffic = 0
