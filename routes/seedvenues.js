@@ -4,16 +4,12 @@ const {random} =            require('../random')
 const {mac} =               require('../random')
 const {token} =             require('../random')
 const {images} =            require('../data/images')
-const {svg} =               require('..data/svg')
+const {svg} =               require('../data/svg')
 
 let cnt = 0
 let traffic = 0
 
 let logos = [...images, ...svg]
-console.log('------- stats on arrays ------')
-console.log(images.length)
-console.log(svg.length)
-console.log(logos.length)
 
 const seedvenues = (router) => {
 	router.use(async(req, res, next) => {
@@ -63,6 +59,10 @@ const seedvenues = (router) => {
       
       cnt = cnt + 1
 
+      if (doc.enterprise[0] == "local") {
+        doc.image = logos[Math.floor(Math.random() * logos.length)]
+      }
+
       await dbProximity.db('proximity').collection('venues')
        .insertOne(doc)
         .catch(err => {
@@ -71,6 +71,8 @@ const seedvenues = (router) => {
         })    
       
     }
+
+    await dbProximity.db('proximity').collection('venues').createIndex({marketid: 1})
 
     let metrics = await dbProximity.db('proximity').collection('venues').stats()
     console.log(`The Proximity Venue collection has ${metrics.count} documents`)
