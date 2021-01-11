@@ -19,13 +19,21 @@ let db = Mongo.connect(machineurl, { useUnifiedTopology: true }, ((err, client) 
     return client.db(dbName)    
   }))
 
-// Atlas db with new collections with test data sets
-let dbProximity = Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
-    if (err) console.log(r(`Error connecting to Proximity MongoDB`))
-    //dbProximity = client.db(proximityName)
+// // Atlas db with new collections with test data sets
+// Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
+//     if (err) console.log(r(`Error connecting to Proximity MongoDB`))
+//     dbProximity = client.db(proximityName)
+//     console.log(b(`Proximity MongoDB is Live`))
+    
+//   }))
+const dbProximity = new Mongo(proximityurl, { useNewUrlParser: true, useUnifiedTopology: true });
+dbProximity.connect(err => {
+  if (err) {
+    console.log('Error connecting to Proximity')
+  } else {
     console.log(b(`Proximity MongoDB is Live`))
-    return client.db(dbName)   
-  }))
+  }
+});
 
   module.exports = {
       db,
