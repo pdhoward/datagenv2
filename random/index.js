@@ -16,10 +16,8 @@ csv().fromFile(uszipsPath)
 
 // retrieve random object from zipcode array
 const random = () => {
-    return new Promise((resolve, reject) => {
-        console.log(`The array of us zipcodes has ${zips.length} entries`)
-        let zip = zips[Math.floor(Math.random() * zips.length)]
-        
+    return new Promise((resolve, reject) => {       
+        let zip = zips[Math.floor(Math.random() * zips.length)]        
         resolve(zip)
     })        
 }

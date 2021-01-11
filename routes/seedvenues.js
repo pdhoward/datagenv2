@@ -19,12 +19,12 @@ const seedvenues = (router) => {
     .deleteMany({})
     .then((res) => {
       console.log(`${res.deletedCount} records deleted!`)
-    })
-
-    const zip = await random() 
-    console.log(zip)   
+    })   
+    
     const cursor = db.db('machine').collection('venues').find({});
     for await (const doc of cursor) {
+
+      const zip = await random() 
 
       doc.address.postalCode = zip.zip
       doc.address.city = zip.city
