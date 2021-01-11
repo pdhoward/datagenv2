@@ -1,4 +1,4 @@
-export const svg = [
+const svg = [
     'https://res.cloudinary.com/stratmachine/image/upload/v1609950125/logos/zigbee_nqd268.svg',
     'https://res.cloudinary.com/stratmachine/image/upload/v1609950127/logos/zulip_xgf6gn.svg',
     'https://res.cloudinary.com/stratmachine/image/upload/v1609950125/logos/zeplin_m0bqin.svg',
@@ -59,3 +59,7 @@ export const svg = [
     'https://res.cloudinary.com/stratmachine/image/upload/v1609950072/logos/surge_vueqxd.svg',
     'http://s.cdpn.io/3/kiwi.svg'
 ]
+
+module.exports = {
+    svg
+}

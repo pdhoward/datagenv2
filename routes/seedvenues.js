@@ -3,8 +3,8 @@ const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
 const {mac} =               require('../random')
 const {token} =             require('../random')
-const images =              require('../data/images')
-const svg =                 require('..data/svg')
+const {images} =            require('../data/images')
+const {svg} =               require('..data/svg')
 
 let cnt = 0
 let traffic = 0
