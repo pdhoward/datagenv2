@@ -1,28 +1,13 @@
 
-const Mongo =               require('mongodb').MongoClient;
 const { v4: uuidv4 } =      require('uuid')
 const {random} =            require('../random')
 const {mac} =               require('../random')
 const {token} =             require('../random')
-const { g, b, gr, r, y } =  require('../console')
-const machineurl = process.env.ATLAS_MACHINE_URI
-const proximityurl = process.env.ATLAS_PROXIMITY_URI
-let dbName = 'machine'
-let proximityName = 'proximity'
-let db
-let dbProximity
+
+const {db, dbProximity} = require('../db')
+
 let cnt = 0
 let traffic = 0
-Mongo.connect(machineurl, { useUnifiedTopology: true }, ((err, client) => {
-  if (err) console.log(r(`Error connecting to Machine MongoDB`))
-  db = client.db(dbName)
-  console.log(b(`Machine MongoDB is Live`))
-}))
-Mongo.connect(proximityurl, { useUnifiedTopology: true }, ((err, client) => {
-  if (err) console.log(r(`Error connecting to Proximity MongoDB`))
-  dbProximity = client.db(proximityName)
-  console.log(b(`Proximity MongoDB is Live`))
-}))
 
 const seedvenues = (router) => {
 	router.use(async(req, res, next) => {
