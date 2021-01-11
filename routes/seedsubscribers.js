@@ -13,13 +13,13 @@ const seedsubscribers = (router) => {
 	router.use(async(req, res, next) => {
 
     // remove all docs from proximity db collection TAG
-    await dbProximity.collection('subscribers')
+    await dbProximity.db('proximity').collection('subscribers')
     .deleteMany({})
     .then((res) => {
       console.log(`${res.deletedCount} records deleted from Tag!`)
     })   
 
-    let metrics = await dbProximity.collection('subscribers').stats()
+    let metrics = await dbProximity.db('proximity').collection('subscribers').stats()
     console.log(`The Proximity Sub collection has ${metrics.count} documents`)
        
     let html = `<h2>Lots of Data Created</h2>`

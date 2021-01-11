@@ -11,23 +11,23 @@ let traffic = 0
 
 const seedops = (router) => {
 	router.use(async(req, res, next) => {
-
+    console.log(typeof dbProximity)
     // remove all docs from proximity db collection TAG
-    await dbProximity.collection('tags')
+    await dbProximity.db('proximity').collection('tags')
     .deleteMany({})
     .then((res) => {
       console.log(`${res.deletedCount} records deleted from Tag!`)
     })
 
     // remove all docs from proximity db collection MESSAGE
-    await dbProximity.collection('messages')
+    await dbProximity.db('proximity').collection('messages')
     .deleteMany({})
     .then((res) => {
       console.log(`${res.deletedCount} records deleted from Message!`)
     })
 
     // remove all docs from proximity db collection BRAND
-    await dbProximity.collection('brands')
+    await dbProximity.db('proximity').collection('brands')
     .deleteMany({})
     .then((res) => {
       console.log(`${res.deletedCount} records deleted from Brand!`)
@@ -35,7 +35,7 @@ const seedops = (router) => {
 
  
 
-    let metrics = await dbProximity.collection('brands').stats()
+    let metrics = await dbProximity.db('proximity').collection('brands').stats()
     console.log(`The Proximity Brand collection has ${metrics.count} documents`)
     
    

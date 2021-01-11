@@ -11,7 +11,7 @@ const seedvenues = (router) => {
 	router.use(async(req, res, next) => {
 
     // remove all docs from proximity db collection
-    await dbProximity.collection('venues')
+    await dbProximity.db('proximity').collection('venues')
     .deleteMany({})
     .then((res) => {
       console.log(`${res.deletedCount} records deleted!`)
@@ -19,7 +19,7 @@ const seedvenues = (router) => {
 
     const zip = await random() 
     console.log(zip)   
-    const cursor = db.collection('venues').find({});
+    const cursor = db.db('machine').collection('venues').find({});
     for await (const doc of cursor) {
 
       doc.address.postalCode = zip.zip
