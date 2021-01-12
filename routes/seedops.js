@@ -3,13 +3,31 @@ const {dbProximity} =       require('../db')
 const csv=                  require('csvtojson')
 const { v4: uuidv4 } =      require('uuid')
 const {addresses} =         require('../data/addressesall.js')
+const {lorem} =             require('../data/lorem.js')
 const {random} =            require('../random')
 const {mac} =               require('../random')
 const {token} =             require('../random')
+const {images} =            require('../data/images')
+const {svg} =               require('../data/svg')
 const { g, b, gr, r, y } =  require('../console')
+
 
 let cnt = 0
 let traffic = 0
+
+let logos = [...images, ...svg]
+
+const getAddress = () => {
+  return addresses[Math.floor(Math.random() * addresses.length)]
+}
+
+const getLorem = () => {
+  return lorem[Math.floor(Math.random() * lorem.length)]
+}
+
+const getLogo = () => {
+  return logos[Math.floor(Math.random() * logos.length)]
+}
 
 const seedops = (router) => {
 	router.use(async(req, res, next) => {    
@@ -50,11 +68,34 @@ const seedops = (router) => {
     brands.forEach(b => {
       brand.brandid = uuidv4()
       brand.type = "Brand"
-
-
+      let address = getAddress()
+      brand.address = address 
+      brand.location = {}
+      brand.location.type = "Point"
+      brand.location.coordinates = []
+      brand.location.coordinates.push(address.coordinates.lng)
+      brand.location.coordinates.push(address.coordinates.lat)
+      brand.industry = b.Sector
+      brand.symbol = b.Symbol 
+      brand.name = b.name 
+      brand.label = b.label
+      brand.isActive = true 
+      brand.isVerified = {}
+      brand.isVerified.result = true 
+      brand.inVerified.verifiedDate = Date.now()
+      brand.isVerified.verifiedMethod = "inspection"
+      brand.overview = getLorem()
+      brand.image = getLogos()
+      brand.slug = null 
+      brand.website = 'https://example.com/'
+      brand.phone = null 
+      brand.timestamp = Date.now()
+      brand.updatedOn = Date.now()
+      cnt = cnt + 1
+      if (cnt < 3 ) console.log(brand)
     })
 
- 
+    console.log(cnt)
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
     console.log(`The Proximity Brand collection has ${metrics.count} documents`)
