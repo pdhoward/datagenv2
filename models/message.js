@@ -7,7 +7,29 @@ const messageSchema = new Schema({
   messageid: String,
   brandid: String,
   tagid: String,
-  content: Object,   // see machine/messages
+  content: {
+    tag: String,  // text, video, audio, display, hyper, survey
+    data: {
+      id: String,
+      avatar: {
+        normal: String  // url for logo
+      },
+      name: String,
+      createdAt: Date,
+      heartCount: String,
+      ctaType: String,
+      ctaCount: String,  // call to action
+      type: String  // tweet
+    },
+    nodes: [
+      {
+        tag: String, // text, survey, etc
+        text: String,
+        url: String, // might be a link to a survey - see mongo actions
+        alt: String
+      }
+    ]
+  },   
   start: Date,
   stop: Date,
   timestamp: Date,
@@ -17,3 +39,44 @@ const messageSchema = new Schema({
 const Message = mongoose.model("Message", messageSchema);
 
 module.exports = Message;
+
+/* notes on message data design
+for nodes, the array will have a combination of objects, and object will
+have a combination of properties depending on the type
+
+1. Text message
+tag = text
+text = some string
+
+2. a survey - or some other interactive micor app
+object 1
+tag = text
+text = string
+object 2
+tag = survey (for example)
+url = string to an actions db ??
+alt = 'form' for example
+
+3. a video
+object 1
+tag = text
+text = string
+
+object 2
+tag = video
+src = string to https mp4
+alt = 'video clip
+poster = string to https image
+
+4. an audio clip
+object 1 
+tag = text
+text = string
+
+object 2
+tag = audio
+src = string to https audio file
+alt = audio clip
+
+
+*/
