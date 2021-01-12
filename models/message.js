@@ -78,5 +78,27 @@ tag = audio
 src = string to https audio file
 alt = audio clip
 
+5. a display message
+object 1
+tag = text
+text = string
+
+object 2
+tag = display
+src = string to image
+alt = some label such as 'qrcode'
+
+6. a hyper link
+
+object 1
+tag = text
+text = string
+
+object 2
+tag = hyper
+href = https link for hyper
+src = image
+alt = label
+
 
 */
