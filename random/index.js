@@ -22,12 +22,19 @@ const random = () => {
     })        
 }
 
-// return a fake mac address for gateway device
+// return a fake mac address in hexadecimal for gateway device
 const mac = size => {
     return new Promise((resolve, reject) => {
         resolve( [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join(''))
     })   
 }      
+
+// return a fake id in hexadecimal 
+const fakeId = size => {
+    return new Promise((resolve, reject) => {
+        resolve( [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join(''))
+    })   
+}   
 
 // generate a random jwt
 function token(venue) {
@@ -39,5 +46,6 @@ function token(venue) {
 module.exports = {
     random, 
     mac,
-    token
+    token,
+    fakeId
 }

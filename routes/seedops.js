@@ -5,14 +5,12 @@ const { v4: uuidv4 } =      require('uuid')
 const {addresses} =         require('../data/addressesall.js')
 const {lorem} =             require('../data/lorem.js')
 const {random} =            require('../random')
-const {mac} =               require('../random')
+const {fakeId} =            require('../random')
 const {token} =             require('../random')
 const {images} =            require('../data/images')
 const {svg} =               require('../data/svg')
 const { g, b, gr, r, y } =  require('../console')
 
-
-let cnt = 0
 let traffic = 0
 
 let logos = [...images, ...svg]
@@ -28,6 +26,10 @@ const getLorem = () => {
 const getLogo = () => {
   return logos[Math.floor(Math.random() * logos.length)]
 }
+
+// create an array products to use for random assignment to test object
+const productPath='./data/products.csv'
+const products = csv().fromFile(productPath) 
 
 const seedops = (router) => {
 	router.use(async(req, res, next) => {    
@@ -56,6 +58,11 @@ const seedops = (router) => {
     const brandPath='./data/brands.csv'
     const brands = await csv().fromFile(brandPath) 
 
+    ///////////////
+    console.log('-----------product page -------')
+    console.log(products.length)
+    console.log(products[5])
+
     // generate three entities
     let brand = {}
     let tag = {}
@@ -66,8 +73,10 @@ const seedops = (router) => {
     console.log(brands[5])
 
     brands.forEach(b => {
+
+      // ======= build brand object ====== 
       brand.brandid = uuidv4()
-      brand.type = "Brand"
+      brand.type = "brand"
       let address = getAddress()
       brand.address = address 
       brand.location = {}
@@ -77,25 +86,41 @@ const seedops = (router) => {
       brand.location.coordinates.push(address.coordinates.lat)
       brand.industry = b.Sector
       brand.symbol = b.Symbol 
-      brand.name = b.name 
-      brand.label = b.label
+      brand.name = b.Name 
+      brand.label = b.Name
       brand.isActive = true 
       brand.isVerified = {}
       brand.isVerified.result = true 
-      brand.inVerified.verifiedDate = Date.now()
+      brand.isVerified.verifiedDate = Date.now()
       brand.isVerified.verifiedMethod = "inspection"
       brand.overview = getLorem()
-      brand.image = getLogos()
+      brand.image = getLogo()
       brand.slug = null 
       brand.website = 'https://example.com/'
       brand.phone = null 
       brand.timestamp = Date.now()
       brand.updatedOn = Date.now()
-      cnt = cnt + 1
-      if (cnt < 3 ) console.log(brand)
+
+      // ====== generate tags ========
+      let cnt = 0
+      do {
+        cnt = cnt + 1 
+        tag.type = "tag"
+        tag.class = "product"
+        tag.tagid = await fakeId(10)
+        tag.brandid = brand.brandid 
+        tag.imdbid = await fakeId(14)
+        tag.name = '***************'
+        tag.description = getLorem()
+        tag.temperature = 75
+        tag.scale = 'fahrenheit'
+        tag.timestamp = Date.now()
+        tag.updatedOn = Date.now()
+      } while (cnt < 100)
     })
 
     console.log(cnt)
+    console.log(tag)
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
     console.log(`The Proximity Brand collection has ${metrics.count} documents`)
