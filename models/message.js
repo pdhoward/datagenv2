@@ -7,7 +7,7 @@ const messageSchema = new Schema({
   messageid: String,
   brandid: String,
   tagid: String,
-  target: Array,   // future - limit scope of campaign
+  target: Array,   // future - limit scope of campaign - set to 'All'
   content: {
     tag: String,  // text, video, audio, display, hyper, survey
     data: {

@@ -8,6 +8,7 @@ const tagSchema = new Schema({
   tagid: String,
   brandid: String,
   imdbid: String,  // id for imdb object and location coordinates
+  name: String,
   description: String,
   temperature: Number, 
   scale: String,  // fahrenheit, celsius

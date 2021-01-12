@@ -7,7 +7,8 @@ const brandSchema = new Schema({
   type: String,   // set to Brand  
   location: Object,
   address: Object,
-  industry: { type: Array, default: [] }, // enterprise id  
+  industry: String, // is Consumer Staples 
+  symbol: String,   // stock trading
   isActive: Boolean,
   isVerified: Object,
   label: String,
