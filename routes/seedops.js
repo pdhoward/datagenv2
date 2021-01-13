@@ -11,8 +11,8 @@ const {images} =            require('../data/images')
 const {svg} =               require('../data/svg')
 const { g, b, gr, r, y } =  require('../console')
 
-let traffic = 0
 let cnt = 0
+let tagarray = []
 
 let logos = [...images, ...svg]
 
@@ -73,7 +73,7 @@ const seedops = (router) => {
     console.log(brands.length)
     console.log(brands[5])
 
-    brands.forEach(async (b) => {
+    for (const b in brands) {
 
       // ======= build brand object ====== 
       brand.brandid = uuidv4()
@@ -104,7 +104,8 @@ const seedops = (router) => {
 
       // ====== generate tags ========
       cnt = 0
-      let tagarray = []
+      tagarray.length = 0
+      
       do {
         cnt = cnt + 1 
         tag.type = "tag"
@@ -120,11 +121,12 @@ const seedops = (router) => {
         tag.updatedOn = Date.now()
         tagarray.push(tag)
       } while (cnt < 100)
+      
+    }
 
-      console.log('----fake tag generated -----')
-      console.log(tagarray.length)
-      console.log(tagarray[5])
-    })
+    console.log('----fake tag generated -----')
+    console.log(tagarray.length)
+    console.log(tagarray[5])
     
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
