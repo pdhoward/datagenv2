@@ -163,6 +163,14 @@ const seedops = (router) => {
         message.stop = new Date(ms)
         messagearray.push(message)
       } while (cnt < 20)
+
+      // write test data to each collection
+      await dbProximity.db('proximity').collection('brands')
+       .insertOne(brand)
+        .catch(err => {
+          console.log(err)
+          process.exit(1)
+        })    
       
     }
 
