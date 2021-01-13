@@ -124,33 +124,56 @@ const seedops = (router) => {
         tagarray.push(tag)
       } while (cnt < 100)
 
-      // ======= generate messages for tags =======
-      // ====== generate tags ========
+      // ======= generate messages =======
+      
       cnt = 0
-      tagarray.length = 0
+      messagearray.length = 0
       
       do {
         cnt = cnt + 1 
-        tag.type = "tag"
-        tag.class = "product"
-        tag.tagid = await fakeId(10)
-        tag.brandid = brand.brandid 
-        tag.imdbid = await fakeId(14)
-        tag.name = '***************'
-        tag.description = getLorem()
-        tag.temperature = 75
-        tag.scale = 'fahrenheit'
-        tag.timestamp = Date.now()
-        tag.updatedOn = Date.now()
-        tagarray.push(tag)
-      } while (cnt < 100)
+        message.type = "message"        
+        message.messageid = await fakeId(10)
+        message.brandid = brand.brandid
+        message.tagid = tagarray[Math.floor(Math.random() * tagarray.length)].tagid
+        message.target = ['All']
+        message.content = {}
+        message.content.tag = 'text'
+        message.content.data = {}
+        message.content.data.id = await fakeId(10)
+        message.content.data.avatar = {}
+        message.content.data.avatar.normal = brand.image
+        message.content.data.name = brand.name 
+        message.content.data.createdAt = Date.now()
+        message.content.data.heartCount = Math.floor(Math.random() * 1000)
+        message.content.data.ctaType = 'click'
+        message.content.data.ctaCount = Math.floor(Math.random() * 500)
+        message.content.nodes = []
+        let obj = {}
+        obj.tag = 'text'
+        obj.text = getLogo()
+        message.content.nodes.push(obj)
+        message.timestamp = Date.now()
+        message.updatedOn = Date.now()
+        message.start = Date.now()
+        let ms = new Date().getTime() + (86400000 * 14)
+        message.stop = new Date(ms)
+        messagearray.push(message)
+      } while (cnt < 20)
       
     }
 
-    console.log('----fake tag generated -----')
+    console.log('----fake tags generated -----')
     console.log(tagarray.length)
     console.log(tagarray[5])
-    
+
+    console.log('----fake messages generated -----')
+    console.log(messagearray.length)
+    console.log(messagearray[5])
+
+    let ids = messagearray.map(m => m.tagid)
+    let filtered = messagearray.filter(({tagid}, index) => !ids.includes(tagid, index + 1))
+    console.log('----filter fake messages ------')
+    console.log(filtered.length)
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
     console.log(`The Proximity Brand collection has ${metrics.count} documents`)
