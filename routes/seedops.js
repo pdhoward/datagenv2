@@ -12,6 +12,7 @@ const {svg} =               require('../data/svg')
 const { g, b, gr, r, y } =  require('../console')
 
 let traffic = 0
+let cnt = 0
 
 let logos = [...images, ...svg]
 
@@ -26,10 +27,6 @@ const getLorem = () => {
 const getLogo = () => {
   return logos[Math.floor(Math.random() * logos.length)]
 }
-
-// create an array products to use for random assignment to test object
-const productPath='./data/products.csv'
-const products = csv().fromFile(productPath) 
 
 const seedops = (router) => {
 	router.use(async(req, res, next) => {    
@@ -58,8 +55,12 @@ const seedops = (router) => {
     const brandPath='./data/brands.csv'
     const brands = await csv().fromFile(brandPath) 
 
+    // create an array products to use for random assignment to test object
+    const productPath='./data/products.csv'
+    const products = await csv().fromFile(productPath) 
+
     ///////////////
-    console.log('-----------product page -------')
+    console.log('------- product array completed ---------')
     console.log(products.length)
     console.log(products[5])
 
@@ -68,11 +69,11 @@ const seedops = (router) => {
     let tag = {}
     let message = {}
 
-    console.log(`-----brand load completed----`)
+    console.log(`-----brand array completed----`)
     console.log(brands.length)
     console.log(brands[5])
 
-    brands.forEach(b => {
+    brands.forEach(async (b) => {
 
       // ======= build brand object ====== 
       brand.brandid = uuidv4()
@@ -102,7 +103,8 @@ const seedops = (router) => {
       brand.updatedOn = Date.now()
 
       // ====== generate tags ========
-      let cnt = 0
+      cnt = 0
+      let tagarray = []
       do {
         cnt = cnt + 1 
         tag.type = "tag"
@@ -116,11 +118,14 @@ const seedops = (router) => {
         tag.scale = 'fahrenheit'
         tag.timestamp = Date.now()
         tag.updatedOn = Date.now()
+        tagarray.push(tag)
       } while (cnt < 100)
-    })
 
-    console.log(cnt)
-    console.log(tag)
+      console.log('----fake tag generated -----')
+      console.log(tagarray.length)
+      console.log(tagarray[5])
+    })
+    
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
     console.log(`The Proximity Brand collection has ${metrics.count} documents`)
