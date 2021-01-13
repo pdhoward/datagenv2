@@ -65,6 +65,7 @@ const seedops = (router) => {
     console.log('------- product array completed ---------')
     console.log(products.length)
     console.log(products[5])
+    console.log(products[5].DESCRIP)
 
     // generate three entities
     let brand = {}
@@ -74,9 +75,11 @@ const seedops = (router) => {
     console.log(`-----brand array completed----`)
     console.log(brands.length)
     console.log(brands[5])
+    console.log(brands[5].Name)
 
-    for (const b in brands) {
-
+    // iterate array of brands to drive creation of test data
+    for (const b of brands) {
+     
       // ======= build brand object ====== 
       brand.brandid = uuidv4()
       brand.type = "brand"
@@ -115,7 +118,8 @@ const seedops = (router) => {
         tag.tagid = await fakeId(10)
         tag.brandid = brand.brandid 
         tag.imdbid = await fakeId(14)
-        tag.name = '***************'
+        let idx = Math.floor(Math.random() * products.length)
+        tag.name = `${products[idx].DESCRIP} ${products[idx].SIZE}`
         tag.description = getLorem()
         tag.temperature = 75
         tag.scale = 'fahrenheit'
@@ -161,6 +165,9 @@ const seedops = (router) => {
       } while (cnt < 20)
       
     }
+
+    console.log('----fake brand generated -----')    
+    console.log(brand)
 
     console.log('----fake tags generated -----')
     console.log(tagarray.length)
