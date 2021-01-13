@@ -14,6 +14,8 @@ const { g, b, gr, r, y } =  require('../console')
 let cnt = 0
 let tagarray = []
 
+let messagearray = []
+
 let logos = [...images, ...svg]
 
 const getAddress = () => {
@@ -102,6 +104,27 @@ const seedops = (router) => {
       brand.timestamp = Date.now()
       brand.updatedOn = Date.now()
 
+      // ====== generate tags ========
+      cnt = 0
+      tagarray.length = 0
+      
+      do {
+        cnt = cnt + 1 
+        tag.type = "tag"
+        tag.class = "product"
+        tag.tagid = await fakeId(10)
+        tag.brandid = brand.brandid 
+        tag.imdbid = await fakeId(14)
+        tag.name = '***************'
+        tag.description = getLorem()
+        tag.temperature = 75
+        tag.scale = 'fahrenheit'
+        tag.timestamp = Date.now()
+        tag.updatedOn = Date.now()
+        tagarray.push(tag)
+      } while (cnt < 100)
+
+      // ======= generate messages for tags =======
       // ====== generate tags ========
       cnt = 0
       tagarray.length = 0
