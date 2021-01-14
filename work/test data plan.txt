@@ -1,0 +1,27 @@
+
+
+PROXIMITY TEST DATA PLAN
+
+0. The strategy is to test a platform which facilitates 'direct to market', 'direct to consumer' messaging for a products and events associated with a venue
+
+This is the physical web, enabled by active signaling from flexible tags operating on the bluetooth standard
+
+1. The complexity of the test data design is high, because of the requirement to test a set of related entities and events. The data entities include
+
+> venues
+> subscribers (or visitors to a venue)
+> brands (selling or displaying products in a venue)
+> tags (BLE devices, low cost, unique identifiers, deployed at mega scale, The tags may be identifying people, product, places or events)
+> messages ( scheduled ads associated with a tag and venue )
+
+Beyond these entities, there are a number of other required data stores that are not integral to this test plan, including accounts, payments, passwords, product (detailed pricing, composition, inventory etc), and associated integrations
+
+2. The app datagenv2 can be used to generate 
+
+> venue data - ingests old venue collection and updates it with additional info. This generates ~3500 stores ... requiring 2 1/2 minutes of run time
+
+> brand, tag and message collections, by ingesting a spreadsheet with a list of all majpr brands, and attaching fake addresses, logos, ids, descriptions. 
+
+> For each brand, 100 tags are generated
+
+> for each brand, 20 messages are generated with a validated tag id and venue id
