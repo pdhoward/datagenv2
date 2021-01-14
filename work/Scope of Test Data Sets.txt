@@ -9,3 +9,4 @@ tags: 50500 unique tag identifiers - Brand id + Tag id
 
 messages: 9151 composed messages = Brand id + Tag id + Message id
 
+----
