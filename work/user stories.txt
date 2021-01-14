@@ -3,7 +3,7 @@
 
 ------
 
-5. User Stories
+USER STORIES
 
 -------
 > I am a shopper
