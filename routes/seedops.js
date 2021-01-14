@@ -132,7 +132,7 @@ const seedops = (router) => {
       do {
         cnt = cnt + 1 
         let message = {}
-        
+
         message.type = "message"        
         message.messageid = await fakeId(10)
         message.brandid = brand.brandid
@@ -163,7 +163,10 @@ const seedops = (router) => {
       } while (cnt < 20)
 
       // write test data to each collection
-      /*
+      // first filter out any messages with duplicate tags generated for that brand
+      let ids = messagearray.map(m => m.tagid)    
+      let filteredmessages = messagearray.filter(({tagid}, index) => !ids.includes(tagid, index + 1))
+            
       await dbProximity.db('proximity').collection('brands')
        .insertOne(brand)
         .catch(err => {
@@ -179,30 +182,24 @@ const seedops = (router) => {
           process.exit(1)
         })
       await dbProximity.db('proximity').collection('messages')
-      .insertMany(messagearray)
+      .insertMany(filteredmessages)
         .catch(err => {
           console.log(`---ERROR UPDATING MESSAGES COLLECTION ---`)
           console.log(err)
           process.exit(1)
         })
-      */
-    }
-
+      
+    }    
     
-    console.log('----filter fake messages ------')
-    let ids = messagearray.map(m => m.tagid)
-    console.log(`there are a total of ${ids.length} Ids`)
-    let filtered = messagearray.filter(({tagid}, index) => !ids.includes(tagid, index + 1))
-    console.log(`There are ${messagearray.length} messages`)
-    console.log(`After filtering - there are ${filtered.length} left`)
-    console.log(filtered.length)
-    console.log(`------------------Before-----------`)
-    console.log(messagearray)
-    console.log(`------------------After-----------`)
-    console.log(filtered)
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
+    console.log(`The Proximity Tag collection has ${metrics.count} documents`)
+
+    metrics = await dbProximity.db('proximity').collection('tags').stats()
     console.log(`The Proximity Brand collection has ${metrics.count} documents`)
+
+    metrics = await dbProximity.db('proximity').collection('messages').stats()
+    console.log(`The Proximity Message collection has ${metrics.count} documents`)
     
    
     let html = `<h2>Lots of Data Created</h2>`
