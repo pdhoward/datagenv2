@@ -193,10 +193,10 @@ const seedops = (router) => {
     
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
-    console.log(`The Proximity Tag collection has ${metrics.count} documents`)
+    console.log(`The Proximity Brand collection has ${metrics.count} documents`)
 
     metrics = await dbProximity.db('proximity').collection('tags').stats()
-    console.log(`The Proximity Brand collection has ${metrics.count} documents`)
+    console.log(`The Proximity Tag collection has ${metrics.count} documents`)
 
     metrics = await dbProximity.db('proximity').collection('messages').stats()
     console.log(`The Proximity Message collection has ${metrics.count} documents`)
