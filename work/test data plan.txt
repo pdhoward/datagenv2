@@ -1,8 +1,9 @@
 
-
 PROXIMITY TEST DATA PLAN
 
 0. The strategy is to test a platform which facilitates 'direct to market', 'direct to consumer' messaging for a products and events associated with a venue
+
+-------------
 
 This is the physical web, enabled by active signaling from flexible tags operating on the bluetooth standard
 
@@ -14,7 +15,9 @@ This is the physical web, enabled by active signaling from flexible tags operati
 > tags (BLE devices, low cost, unique identifiers, deployed at mega scale, The tags may be identifying people, product, places or events)
 > messages ( scheduled ads associated with a tag and venue )
 
-Beyond these entities, there are a number of other required data stores that are not integral to this test plan, including accounts, payments, passwords, product (detailed pricing, composition, inventory etc), and associated integrations
+Beyond these entities, there are a number of other required data stores that are not integral to this test plan, including accounts, payments, passwords, product (detailed pricing, composition, inventory etc), auctions for supply and associated integrations
+
+--------------
 
 2. The app datagenv2 can be used to generate 
 
@@ -25,3 +28,47 @@ Beyond these entities, there are a number of other required data stores that are
 > For each brand, 100 tags are generated
 
 > for each brand, 20 messages are generated with a validated tag id and venue id
+
+-------------
+
+3. For these tests, the default on 'message.target' is 'All', meaning the brand has scheduled an ad to delivered to every venue in which its' product is detected. 
+
+> A product is detected through an active tag. 
+> An active tag is detected though a gateway device which ingests signals and posts to the Tag Cloud
+> When a subscriber registered to the platform enters the venue carrying a universal card, a url linked to a web page with messages for that venue is conveyed via sms (or a visitor can requesta web page for the venue via a QR Code)
+
+-----
+
+4. Test Process
+
+> a 'tag signaling' emulation server emits a stream of random signals at scale for venues and tags. The signals encompass places and products. This demonstrates the dense, low latency signaling environment of a venue
+> a 'tag signaling' emulation server emits periodic random signals for people - demonstrating entry into a venue
+
+------
+
+5. User Stories
+
+-------
+> I am a shopper
+> I visit a supermarket
+> I enter the venue and receive a text message from that venue
+> I click on the url which is embedded in the text message
+> I recieve a web page with a compilation of messages
+> The messages cover product ads, venue messages (ie floor plan), entertainment, games, instructions, warranties and other useful information
+> My shopping experience and visit are enhanced
+
+-----
+> I am a brand
+> I want to promote products which I sell in venues
+> I review available venues nationally where my product is detected real-time
+> I schedule a message (offer, highlight, warranty ) (and ultimately bid on available ad space)
+> My message is elected for that venue, time slot and bid price
+> The message is delivered to all subscribers entering the store or visitors requesting the webpage
+
+-----------
+> I am a venue
+> I carry products with realtime tags
+> I use realtime tags on shelves and other store fixtures
+> I compose messages for the venue, and schedule delivery times with bid prices
+> I accept meessages for the venue, from brands whose products I carry
+
