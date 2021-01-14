@@ -1,0 +1,11 @@
+
+
+
+venues: 3500 supermarkets, universities, sports facilities, car dealers, etc
+
+brands: 505 major brands
+
+tags: 50500 unique tag identifiers - Brand id + Tag id
+
+messages: 9151 composed messages = Brand id + Tag id + Message id
+
