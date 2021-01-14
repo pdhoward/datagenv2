@@ -16,6 +16,10 @@ let tagarray = []
 
 let messagearray = []
 
+let brandarray = []
+
+let isFirstCycle = true
+
 let logos = [...images, ...svg]
 
 const getAddress = () => {
@@ -60,23 +64,12 @@ const seedops = (router) => {
     // create an array products to use for random assignment to test object
     const productPath='./data/products.csv'
     const products = await csv().fromFile(productPath) 
-
-    ///////////////
-    console.log('------- product array completed ---------')
-    console.log(products.length)
-    console.log(products[5])
-    console.log(products[5].DESCRIP)
-
+   
     // generate three entities
     let brand = {}
     let tag = {}
     let message = {}
-
-    console.log(`-----brand array completed----`)
-    console.log(brands.length)
-    console.log(brands[5])
-    console.log(brands[5].Name)
-
+   
     // iterate array of brands to drive creation of test data
     for (const b of brands) {
      
@@ -107,6 +100,7 @@ const seedops = (router) => {
       brand.timestamp = Date.now()
       brand.updatedOn = Date.now()
 
+      brandarray.push(brand)
       // ====== generate tags ========
       cnt = 0
       tagarray.length = 0
@@ -165,25 +159,31 @@ const seedops = (router) => {
       } while (cnt < 20)
 
       // write test data to each collection
+      /*
       await dbProximity.db('proximity').collection('brands')
        .insertOne(brand)
         .catch(err => {
           console.log(err)
           process.exit(1)
-        })    
-      
+        }) 
+      */
+
+      if (isFirstCycle) {
+        console.log('----fake brand generated -----')    
+        console.log(brandarray[0])
+
+        console.log('----fake tags generated -----')
+        console.log(tagarray.length)
+        console.log(tagarray[5])
+
+        console.log('----fake messages generated -----')
+        console.log(messagearray.length)
+        console.log(messagearray[5])
+      }
+         
     }
 
-    console.log('----fake brand generated -----')    
-    console.log(brand)
-
-    console.log('----fake tags generated -----')
-    console.log(tagarray.length)
-    console.log(tagarray[5])
-
-    console.log('----fake messages generated -----')
-    console.log(messagearray.length)
-    console.log(messagearray[5])
+    
 
     let ids = messagearray.map(m => m.tagid)
     let filtered = messagearray.filter(({tagid}, index) => !ids.includes(tagid, index + 1))
