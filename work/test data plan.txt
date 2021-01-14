@@ -29,6 +29,10 @@ Beyond these entities, there are a number of other required data stores that are
 
 > for each brand, 20 messages are generated with a validated tag id and venue id
 
+> For subscribers, fake profiles
+
+> 
+
 -------------
 
 3. For these tests, the default on 'message.target' is 'All', meaning the brand has scheduled an ad to delivered to every venue in which its' product is detected. 
@@ -64,11 +68,26 @@ Beyond these entities, there are a number of other required data stores that are
 > I schedule a message (offer, highlight, warranty ) (and ultimately bid on available ad space)
 > My message is elected for that venue, time slot and bid price
 > The message is delivered to all subscribers entering the store or visitors requesting the webpage
+> I view metrics on the success of my marketing campaign
 
 -----------
 > I am a venue
 > I carry products with realtime tags
 > I use realtime tags on shelves and other store fixtures
 > I compose messages for the venue, and schedule delivery times with bid prices
-> I accept meessages for the venue, from brands whose products I carry
+> I accept messages for the venue, from brands whose products I carry
+> I can preview a webpage before it is available realtime to venue visitors and traffic
+> I maintain my venue profile, providing highlights on venue environment, purpose, traffic, market category, etc
+> I view metrics and dashbaord on the success of my messaging service
+
+------
+> I am the platform.
+> I provide a platform for venues, brands and subscribers to maintain accounts and profiles
+> I provide services to compose messages, including text, image, audio, hyperlinks, video, and interactive function
+> I provide integration to the Wiliot cloud
+> Futures:
+- integrations to brands product clouds
+- improving set of measurements and metrics via standard and custom dashbaords
+- improving web pages with more elegance, organization and functions
+- improving set of micro apps, delivered by the platform
 
