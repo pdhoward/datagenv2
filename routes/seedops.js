@@ -70,10 +70,8 @@ const seedops = (router) => {
     // iterate array of brands to drive creation of test data
     for (const b of brands) {
 
-      // generate three entities
-      let brand = {}
-      let tag = {}
-      let message = {}
+      // generate data entities
+      let brand = {}      
      
       // ======= build brand object ====== 
       brand.brandid = uuidv4()
@@ -109,6 +107,8 @@ const seedops = (router) => {
       
       do {
         cnt = cnt + 1 
+        let tag = {}
+      
         tag.type = "tag"
         tag.class = "product"
         tag.tagid = await fakeId(10)
@@ -131,6 +131,8 @@ const seedops = (router) => {
       
       do {
         cnt = cnt + 1 
+        let message = {}
+        
         message.type = "message"        
         message.messageid = await fakeId(10)
         message.brandid = brand.brandid
