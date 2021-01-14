@@ -65,13 +65,15 @@ const seedops = (router) => {
     const productPath='./data/products.csv'
     const products = await csv().fromFile(productPath) 
    
-    // generate three entities
-    let brand = {}
-    let tag = {}
-    let message = {}
+    
    
     // iterate array of brands to drive creation of test data
     for (const b of brands) {
+
+      // generate three entities
+      let brand = {}
+      let tag = {}
+      let message = {}
      
       // ======= build brand object ====== 
       brand.brandid = uuidv4()
@@ -163,32 +165,39 @@ const seedops = (router) => {
       await dbProximity.db('proximity').collection('brands')
        .insertOne(brand)
         .catch(err => {
+          console.log(`---ERROR UPDATING BRANDS COLLECTION ---`)
           console.log(err)
           process.exit(1)
-        }) 
+        })      
+      await dbProximity.db('proximity').collection('tags')
+      .insertMany(tagarray)
+        .catch(err => {
+          console.log(`---ERROR UPDATING TAGS COLLECTION ---`)
+          console.log(err)
+          process.exit(1)
+        })
+      await dbProximity.db('proximity').collection('messages')
+      .insertMany(messagearray)
+        .catch(err => {
+          console.log(`---ERROR UPDATING MESSAGES COLLECTION ---`)
+          console.log(err)
+          process.exit(1)
+        })
       */
-
-      if (isFirstCycle) {
-        console.log('----fake brand generated -----')    
-        console.log(brandarray[0])
-
-        console.log('----fake tags generated -----')
-        console.log(tagarray.length)
-        console.log(tagarray[5])
-
-        console.log('----fake messages generated -----')
-        console.log(messagearray.length)
-        console.log(messagearray[5])
-      }
-         
     }
 
     
-
-    let ids = messagearray.map(m => m.tagid)
-    let filtered = messagearray.filter(({tagid}, index) => !ids.includes(tagid, index + 1))
     console.log('----filter fake messages ------')
+    let ids = messagearray.map(m => m.tagid)
+    console.log(`there are a total of ${ids.length} Ids`)
+    let filtered = messagearray.filter(({tagid}, index) => !ids.includes(tagid, index + 1))
+    console.log(`There are ${messagearray.length} messages`)
+    console.log(`After filtering - there are ${filtered.length} left`)
     console.log(filtered.length)
+    console.log(`------------------Before-----------`)
+    console.log(messagearray)
+    console.log(`------------------After-----------`)
+    console.log(filtered)
 
     let metrics = await dbProximity.db('proximity').collection('brands').stats()
     console.log(`The Proximity Brand collection has ${metrics.count} documents`)
