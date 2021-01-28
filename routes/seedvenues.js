@@ -15,12 +15,14 @@ const seedvenues = (router) => {
 	router.use(async(req, res, next) => {
 
     // remove all docs from proximity db collection
-    await dbProximity.db('proximity').collection('venues')
-    .deleteMany({})
-    .then((res) => {
-      console.log(`${res.deletedCount} records deleted!`)
-    })   
+    // NOTE DO NOT DELETE VENUES - THE OLD MACHINE COLLECTION IS DELETED
+    // await dbProximity.db('proximity').collection('venues')
+    // .deleteMany({})
+    // .then((res) => {
+    //   console.log(`${res.deletedCount} records deleted!`)
+    // })   
     
+    // ARCHIVED NO LONGER WORKS - logic preserved for doc purposes
     const cursor = db.db('machine').collection('venues').find({});
     for await (const doc of cursor) {
 
