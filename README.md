@@ -31,6 +31,13 @@ The following flow was used in crafting the test data set for validating the Ven
 - each message is assigned a unique message id
 - text based message generated (but other types will be generated in future)
 - object format conforms with requirements for proximity-publish app to generate a web page per venue with brand ads
+- save to each of the respective collections in the proximity db
+
+### GENERATE SUBSCRIBER DATA SET
+#### Includes people profiles simulating the type of data associated with a visitor to a venue
+1. Delete all old collection for subscribers
+2. for each person in the test csv file, generate a subscriber object with a subset of data that simulates the profile of subscriber to the service
+3. save to the proximity db
 
 ## LICENSE
 MIT
