@@ -4,8 +4,22 @@ Test data generator for PROXIMITY, customized to a specific platform use case
 
 ## Process Flow
 
-* Generating test data is one of the more difficult tasks in app development. The combination of conditions and exceptions are manifold, and well-designed tests processes are dependent on well-developed test data to help uncover technical and functional errors. The following flow was used in crafting the test data set for validating the Venues that participate in the PROXIMITY DTC messaging network
+* Generating test data is one of the more difficult tasks in app development. The combination of conditions and exceptions are manifold, and well-designed tests processes are dependent on well-developed test data to help uncover technical and functional errors. The complexity mounts when working with apps that process streaming data, since the user stories requires datasets which are synced with great precision to emulate a realistic production environment.
 
+The following flow was used in crafting the test data set for validating the Venues that participate in the PROXIMITY DTC messaging network
+
+### GENERATE VENUE DATA SET
+#### Note this function has been archived and the machine/venue collection has been deleted. The proximity/venue dataset is egenrated and available for testing. These notes left for documentation putposes
+1. Fetch a document from machine/venues on Atlas
+2. From the ../usazips file, randomly retrieve a zip code, location coordinates, city, state for insertion into doc
+3. From the [logos] url, randomly retrieve an image url and insert as image
+4. Update doc with embedded IMDF (indoor mapping data format) object (future capability to render indoor maps)
+5. Generate and insert a mock gateway address (mac address) as monitors (needs to be an Array for future testing)
+6. Generate and insert a mock JWT for accessing TAG DB
+7. Insert 'type id' as 'Venue'
+
+### GENERATE OPS DATA SET
+#### Includes brands, product tags and messages
 1. Fetch a document from machine/venues on Atlas
 2. From the ../usazips file, randomly retrieve a zip code, location coordinates, city, state for insertion into doc
 3. From the [logos] url, randomly retrieve an image url and insert as image
