@@ -20,13 +20,17 @@ The following flow was used in crafting the test data set for validating the Ven
 
 ### GENERATE OPS DATA SET
 #### Includes brands, product tags and messages
-1. Fetch a document from machine/venues on Atlas
-2. From the ../usazips file, randomly retrieve a zip code, location coordinates, city, state for insertion into doc
-3. From the [logos] url, randomly retrieve an image url and insert as image
-4. Update doc with embedded IMDF (indoor mapping data format) object (future capability to render indoor maps)
-5. Generate and insert a mock gateway address (mac address) as monitors (needs to be an Array for future testing)
-6. Generate and insert a mock JWT for accessing TAG DB
-7. Insert 'type id' as 'Venue'
+1. Delete all old collections in brands, tags and messages
+2. for each brand in the test csv file, build a brand object
+- mock up addresses and location data
+- create a unique brandid 
+3. for each brand, generate 100 fake product tags
+- each product tag is assigned a unique fake tagid
+- attach a random product name and description from test csv file
+4. for each brand, generate 20 product messages or advertisements, incorporating tag ids that were generated in step 3 above 
+- each message is assigned a unique message id
+- text based message generated (but other types will be generated in future)
+- object format conforms with requirements for proximity-publish app to generate a web page per venue with brand ads
 
 ## LICENSE
 MIT
